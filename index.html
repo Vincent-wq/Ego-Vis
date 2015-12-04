@@ -5,43 +5,78 @@
         <meta name="author" content="Qing Wang, Zhiyao Teng, Jiansu Pu" />
         <meta name="title" content="Visulization of Ego Communication Networks" />
         <title> Visulization of Ego Communication Networks </title>
-        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-		<style type="text/css">
-		    div#container{width:1024px}
-        div#header {background-color:#99bbbb;}
-        div#menu {background-color:#ffff99; height:720px; width:200px; float:left;}
-        div#content {background-color:#EEEEEE; height:720px; width:824px; float:left;}
-        div#footer {background-color:#99bbbb; clear:both; text-align:center;}
+        <style type="text/css">
+        
+        div #container {background-color: #EEEEEE;}
+        div #header    {background-color: #99bbbb;}
+        div #alters    {background-color: #ffff99; height:273; width:307px; float:right; clear: right;}
+        div #contPanel {background-color: #ffff99; height:144; width:307px; float:right; clear: right;}
+        div #statistics{background-color: #ffff99; height:273; width:307px; float:right; clear: right;}
+        div #mainvis   {background-color: #e5f5f9; height:720; width:947px; float:left;  clear: left;}
+        div #footer    {background-color: #99bbbb; width:1280; clear:both; text-align:center;font-family: sans-serif;}
         h1 {margin-bottom:0;font-size: 48px; font-family: sans-serif;}
         h2 {margin-bottom:0; font-size:32px; font-family: sans-serif;}
+        h3 {margin-bottom:0; font-size:28px; font-family: sans-serif;}
         ul {margin:0;}
         li {list-style:none;}   
         
-		    div.bar{
-			      display: inline-block;
-			      width: 50px;
-		       	height:75px;
-		      	margin-right:5px;
-		       	background-color:teal;}
-			  .node {
+            div.bar{
+                  display: inline-block;
+                  width: 50px;
+                height:75px;
+                margin-right:5px;
+                background-color:teal;}
+              .node {
             stroke: #fff;
             stroke-width: 1.5px;}
         .link {
             stroke: #999;
             stroke-opacity: .6px;}
-		</style>
+        </style>
     </head>
 
     <body bgcolor="#EEEEEE">
-            <div id="header">
-            <h1>Vis ECN</h1></div>
+
+        <div id="container">
+            <div id = "header"> <h1>Vis ECN</h1></div>
             <hr>
-            <div id="footer"> Powered by Qing Wang, Zhiyao Teng and Jiansu Pu. </div>
-            <table width = "1024", border = "0">
-            <th><h2> TBD... </h2></th> <th><h2> TBD... </h2></th>
+            <table>
+            <tr>
+                <td>
+                    <div id = "mainvis"> 
+                    <h2>Main View</h2>
+                    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+                    <script type="text/javascript" src="pECN/ECNrendering.js"></script> 
+                    </div>
+                </td> 
+                <td>
+                    <table>
+                        <tr>
+                            <div id = "alters"> 
+                                <he3> chord Vis </h3> 
+
+                            </div>
+                        </tr>
+
+                        <tr>
+                            <div id = "contPanel"> 
+                                <h3> Control Panel </h3>
+                            </div>
+                        </tr>
+
+                        <tr>
+                            <div id = "statistics">
+                            <h3> Statistics </h3>
+                            </div>
+                        </tr>
+
+                    </table>
+                </td>
             </table>
-            <script type="text/javascript" src="xxx.js"></script> 
+
             <hr>
+            <div id = "footer"> Powered by Qing Wang, Zhiyao Teng and Jiansu Pu. </div>
+        </div>
     </body>
-	
+    
 </html>
