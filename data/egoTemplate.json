@@ -10,7 +10,7 @@
              "link_ego2alter": [
                                 {"source": 0, "target": 1, "ltype":0,  "w":12},
     	                        {"source": 2, "target": 0, "ltype":1 , "w":32},
-    	                        {"source": 1, "target": 3, "ltype":2,  "w":4}
+    	                        {"source": 0, "target": 3, "ltype":2,  "w":24}
     	                       ],
              "link_alter2alter": [
                                   {"source": "alter1", "target": "alter2", "w1":10, "w2":12},
