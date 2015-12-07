@@ -9,11 +9,11 @@
         
         div #container {background-color: #EEEEEE;}
         div #header    {background-color: #99bbbb;}
-        div #alters    {background-color: #ffff99; height:273; width:307px; float:right; clear: right;}
-        div #contPanel {background-color: #ffff99; height:144; width:307px; float:right; clear: right;}
-        div #statistics{background-color: #ffff99; height:273; width:307px; float:right; clear: right;}
-        div #mainvis   {background-color: #e5f5f9; height:720; width:947px; float:left;  clear: left;}
-        div #footer    {background-color: #99bbbb; width:1280; clear:both; text-align:center;font-family: sans-serif;}
+        div #chordVis  {background-color: #ffff99; height:273px; width:307px; float:right;}
+        div #contPanel {background-color: #ffff99; height:144px; width:307px; float:right; }
+        div #statVis   {background-color: #ffff99; height:273px; width:307px; float:right; }
+        div #mainVis   {background-color: #e5f5f9; height:720px; width:947px; float:left; }
+        div #footer    {background-color: #99bbbb; width:1280px; clear:both; text-align:center;font-family: sans-serif;}
         h1 {margin-bottom:0;font-size: 48px; font-family: sans-serif;}
         h2 {margin-bottom:0; font-size:32px; font-family: sans-serif;}
         h3 {margin-bottom:0; font-size:28px; font-family: sans-serif;}
@@ -32,30 +32,45 @@
         .link {
             stroke: #999;
             stroke-opacity: .6px;}
+        .linetext {
+            font-size: 12px ;
+            font-family: SimSun;
+            fill:#0000FF;
+            fill-opacity:0.5;}
+        .tooltip{
+            position: absolute;
+            width: 120;
+            height: auto;
+            font-family: simsun;
+            font-size: 14px;
+            text-align: center;
+            border-style: solid;
+            border-width: 1px;
+            background-color: white;
+            border-radius: 3px;
+        }
         </style>
     </head>
 
     <body bgcolor="#EEEEEE">
 
         <div id="container">
-            <div id = "header"> <h1>Vis ECN</h1></div>
+            <div id = "header"> <h1> Vis ECN </h1></div>
             <hr>
             <table>
             <tr>
                 <td>
-                    <div id = "mainvis"> 
-                    <h2>Main View</h2>
-                    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-                    <script type="text/javascript" src="ego_force.js"></script> 
+                    <div id = "mainVis" width = "720px" height = "947px"> 
+                    <h2> Main View </h2>
                     </div>
                 </td> 
                 <td>
                     <table>
                         <tr>
-                            <div id = "alters"> 
-                                <he3> chord Vis </h3> 
+                            <div id = "chordVis">
+                            <h3> chord Vis </h3>
+                             </div>
 
-                            </div>
                         </tr>
 
                         <tr>
@@ -65,15 +80,15 @@
                         </tr>
 
                         <tr>
-                            <div id = "statistics">
-                            <h3> Statistics </h3>
+                            <div id = "statVis">
+                                <h3> Statistics </h3>
                             </div>
                         </tr>
-
                     </table>
+                    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+                    <script type="text/javascript" src="egoVis.js"></script> 
                 </td>
             </table>
-
             <hr>
             <div id = "footer"> Powered by Qing Wang, Zhiyao Teng and Jiansu Pu. </div>
         </div>

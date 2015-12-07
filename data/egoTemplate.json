@@ -1,0 +1,39 @@
+{
+	"egos": 
+	       [{"name" : "ego1",
+             "nodes" : [
+                       {"name": "ego1",   "ntype": 0, "w": 90},
+                       {"name": "alter1", "ntype": 1, "w": 21},
+    	               {"name": "alter2", "ntype": 1, "w": 77},
+    	               {"name": "alter3", "ntype": 1, "w": 35}
+    	              ],
+             "link_ego2alter": [
+                                {"source": 0, "target": 1, "ltype":0,  "w":12},
+    	                        {"source": 2, "target": 0, "ltype":1 , "w":32},
+    	                        {"source": 1, "target": 3, "ltype":2,  "w":4}
+    	                       ],
+             "link_alter2alter": [
+                                  {"source": "alter1", "target": "alter2", "w1":10, "w2":12},
+                                  {"source": "alter3", "target": "alter1", "w1":4,  "w2":8},
+                                  {"source": "alter2", "target": "alter2", "w1":23, "w2":11}
+                                 ]},
+
+            {"name" : "ego2",
+             "nodes" : [
+                        {"name": "ego2",   "type": 0, "w2": 90},
+                        {"name": "alter1", "type": 1, "w2": 21},
+    	                {"name": "alter2", "type": 1, "w2": 77},
+    	                {"name": "alter3", "type": 1, "w2": 35}
+    	                ],
+             "edge_ego2alter": [
+                                {"source": "ego2", "target": "alter1", "type":0, "w2":12},
+    	                        {"source": "alter2", "target": "ego2", "type":1, "w2":32},
+    	                        {"source": "ego2", "target": "alter3", "type":2, "w2":4}
+    	                       ],
+             "edge_alter2alter": [
+                                  {"source": "alter1", "target": "alter2", "w1":10, "w2":12},
+                                  {"source": "alter3", "target": "alter1", "w1":4,  "w2":8},
+                                  {"source": "alter2", "target": "alter2", "w1":23, "w2":11}
+                                 ]}
+           ]
+}

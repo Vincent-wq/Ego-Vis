@@ -1,0 +1,24 @@
+﻿{
+"nodes":[
+{ "name": "Ego"    , "ntype" : 0 },
+{ "name": "alter1" , "ntype" : 1 },
+{ "name": "alter2" , "ntype" : 1 },
+{ "name": "alter3" , "ntype" : 1 },
+{ "name": "alter4" , "ntype" : 1 },
+{ "name": "alter5" , "ntype" : 1 }
+],
+
+"edges":[
+{ "source": 0 , "target": 1 , "etype":0, "w":5 } ,
+{ "source": 0 , "target": 2 , "etype":0, "w":6 },
+{ "source": 0 , "target": 3 , "etype":0, "w":5 },
+{ "source": 0 , "target": 4 , "etype":0, "w":3 },
+{ "source": 0 , "target": 5 , "etype":0, "w":10 },
+{ "source": 1 , "target": 3 , "etype":1, "w":4 },
+{ "source": 2 , "target": 3 , "etype":1, "w":5 },
+{ "source": 4 , "target": 2 , "etype":1, "w":2 },
+{ "source": 4 , "target": 3 , "etype":1, "w":9 },
+{ "source": 4 , "target": 5 , "etype":1, "w":3 }
+]
+}
+
