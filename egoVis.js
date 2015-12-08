@@ -3,69 +3,89 @@
 // global varebles
 var selEgo = null;
 
-var color = d3.scale.category20();
+var node_Color1 = d3.scale.quantize()
+                          .domain([0,1,2,3])
+                          .range(["#d95f02","#386cb0","#66a61e","#e6ab02"])
+var node_Color2 = d3.scale.quantize()
+                          .domain([0,1,2,3])
+                          .range(["#fc8d62","#8da0cb","#a6d854","#fff2ae"])
 
+var tip1 = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([0, 0])
+            .html(function(d) {
+                return d.data.name + " weight: <span style='color:orangered'>" + d.data.w1 + "</span>";
+             });
+var tip2 = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([0, 0])
+            .html(function(d) {
+                return d.data.name + " total weights: <span style='color:orangered'>" + d.data.w2 + "</span>";
+             });
 // svg attributes
 
 
-// BulbVis
+/*// BulbVis
 var widthBuble = 680, heightBuble = 947;
-var padddingBuble = 100;
+var padddingBuble = 100;*/
 
-// ForceVis
+/*// ForceVis
 var widthForce = 947, heightForce = 680;
-var padddingForce = 100;
 var ego_node_fill    = "#e34a33";
 var alter_node_fill  = "#2b8cbe";
 var node_onclick_fill= "#de2d26";
 var link_in_stroke  = "#a6bddb";
 var link_out_stroke = "#fdbb84";
-var link_io_stroke  = "#addd8e";    
+var link_io_stroke  = "#addd8e";    */
 
-// DonutVis
+/*// DonutVis
 var widthDonut = 947, heightDonut = 680;
-var padddingDonut = 100;
 var radiusDonut = Math.min(widthDonut,heightDonut)/2;
 var outRadiusDonut = radiusDonut*0.6,
     inRadiusDonut = radiusDonut*0.54;
 var egoSize = radiusDonut*0.5
 var egoFill = "#727194"
 var colorDonut = d3.scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888"]);
+*/
 
-// ChordVis
+// Aster Vis
+var widthAster = 947, heightAster = 680;
+var radius_Aster = Math.min(widthAster,heightAster)/2;
+var inner_Radius_Aster = radius_Aster*0.3;
+var mid_Radius_Aster1 = radius_Aster*0.49;
+var mid_Radius_Aster2 = radius_Aster*0.51;
+var egoSize = radius_Aster*0.28;
+var colorDonut = d3.scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888"]);
+
+/*// ChordVis
 var widthChord = 307, heightChord = 273;
-var padddingChord = 100;
+var padddingChord = 100;*/
 
-// StatVis
+/*// StatVis
 var widthStat = 307, heightStat = 273;
-var padddingStat = 100;
+var padddingStat = 100;*/
 
 
 //SVG initialization
 // Vis Areas
-/*var svgForce  = d3.select("#mainVis").append("svg").attr("width",widthForce)
-                                                   .attr("height",heightForce);*/
-
-var svgDonut  = d3.select("#mainVis").append("svg").attr("width",widthDonut)
-                                                   .attr("height",heightDonut)
-                                                   
-var arcDonut = d3.svg.arc()
-                 .outerRadius(outRadiusDonut)
-                 .innerRadius(inRadiusDonut);
-
-var pieDonut = d3.layout.pie()
-                        .sort(d3.descending)
-                        .value(function(d) { return d.w1;});
+/*// ForceVis
+var svgForce  = d3.select("#mainVis").append("svg").attr("width",widthForce).attr("height",heightForce);*/
+/*//DonutVis
+var svgDonut  = d3.select("#mainVis").append("svg").attr("width",widthDonut).attr("height",heightDonut)*/
 
 
-var svgBulbel = d3.select("#mainVis").append("svg").attr("width",widthBuble)
-                                                   .attr("height",heightBuble);
+//AsterVis
+var svgAster = d3.select("#mainVis").append("svg").attr("width",widthAster).attr("height",heightAster)
 
-var svgChord  = d3.select("#ChordVis").append("svg").attr("width",widthChord)
-                                                    .attr("height",heightChord);
+/*//BubleVis
+var svgBulbel = d3.select("#mainVis").append("svg").attr("width",widthBuble).attr("height",heightBuble);*/
 
-var svgStat   = d3.select("#statVis").append("svg").attr("width",widthStat)
-                                                   .attr("height",heightStat);
+/*//ChordVis
+var svgChord  = d3.select("#ChordVis").append("svg").attr("width",widthChord).attr("height",heightChord);*/
+
+/*//StatVis
+var svgStat   = d3.select("#statVis").append("svg").attr("width",widthStat).attr("height",heightStat);*/
+
 // tooltips
 var tooltip = d3.select("#mainVis").append("div").attr("class","tooltip").style("opacity",0);
 
@@ -104,14 +124,14 @@ d3.json("data/egoTemplate.json",
                                .style("stroke",function (d) {if (d.ltype == 0) {return link_io_stroke;} 
                                	                            else if (d.ltype == 1) {return link_out_stroke;}
                                	                            else if (d.ltype == 2) {return link_in_stroke;} })
-                               .style("stroke-width",function(d){return d.w+4;})
-                               .text(function(d){return d.w;});
+                               .style("stroke-width",function(d){return d.w1+4;})
+                               .text(function(d){return d.w1;});
 //bond nodes                                
             var nodes= svgForce.selectAll(".node")
                                .data(selEgo.nodes)
                                .enter()
-                               .append(function(d, i) { if (d.ntype == 1) {return createSvgEl("circle");} 
-               	                                       else {return createSvgEl("rect"); }  });
+                               .append(function(d, i) { if (d.ntype == 0) {return createSvgEl("rect");} 
+               	                                       else {return createSvgEl("circle"); }  });
 // ego node initialize
             var ego   =  svgForce.selectAll("rect")
                                  .attr("width",100)
@@ -121,7 +141,7 @@ d3.json("data/egoTemplate.json",
                                  .attr("fill",ego_node_fill)
                                  .on("mouseover",function(d){ 
 					             	d3.select(this).attr("fill",node_onclick_fill);
-					                tooltip.html("Size  "+"<br />="+d.w).style("left", (d3.event.pageX)+"px")
+					                tooltip.html("Size  "+"<br />="+d.w1).style("left", (d3.event.pageX)+"px")
 					                                           .style("top", (d3.event.pageY+20)+"px")
 					                                           .style("opacity",1.0)})
 					             .on("mousemove", function(d) {
@@ -140,7 +160,7 @@ d3.json("data/egoTemplate.json",
                                 .attr("fill",function (d) {if (d.ntype == 0) {return ego_node_fill;} else {return alter_node_fill;}})
 					            .on("mouseover",function(d){ 
 					            	d3.select(this).attr("fill",node_onclick_fill);
-					                tooltip.html("Size  "+"<br />="+d.w).style("left", (d3.event.pageX)+"px")
+					                tooltip.html("Size  "+"<br />="+d.w1).style("left", (d3.event.pageX)+"px")
 					                                           .style("top", (d3.event.pageY+20)+"px")
 					                                           .style("opacity",1.0)})
 					            .on("mousemove", function(d) {
@@ -153,6 +173,7 @@ d3.json("data/egoTemplate.json",
 					            .call(force.drag);
 					            console.log("alters:");
 					            console.log(nodes);
+
 // Node lable initialize
 		    var n_label = svgForce.selectAll("text")
                                   .data(selEgo.nodes)
@@ -170,39 +191,48 @@ d3.json("data/egoTemplate.json",
             	     ego.attr("x", function(d) {return d.x-50;})
             	        .attr("y", function(d) {return d.y-40;});
 
-                     alters.attr("cx",function(d){ return d.x; })
-                           .attr("cy",function(d){ return d.y; });
+                     alters.attr("cx",function(d) { return d.x; })
+                           .attr("cy",function(d) { return d.y; });
 
-                     n_label.attr("x", function(d){  return d.x; })
-                            .attr("y", function(d){  return d.y; });
+                     n_label.attr("x", function(d) { return d.x; })
+                            .attr("y", function(d) { return d.y; });
 
-                     link.attr("x1",function(d){ return d.source.x; })
-                         .attr("y1",function(d){ return d.source.y; })
-                         .attr("x2",function(d){ return d.target.x; })
-                         .attr("y2",function(d){ return d.target.y; });
+                     link.attr("x1",function(d) { return d.source.x; })
+                         .attr("y1",function(d) { return d.source.y; })
+                         .attr("x2",function(d) { return d.target.x; })
+                         .attr("y2",function(d) { return d.target.y; });
                      });*/
 
-// DonutVis 
+/*// DonutVis 
             selEgo = data.egos[0].nodes
             var alter_w1 = new Array,
                 alter_w2 = new Array,
                 alter_w21 = new Array;
             for (var t in selEgo) {alter_w1.push(selEgo[t].w1);alter_w2.push(selEgo[t].w2);};
-            for (var t in selEgo) {alter_w21.push(selEgo[t].w2-selEgo[t].w1);};
+            for (var t in selEgo) {alter_w21.push(selEgo[t].w1/selEgo[t].w2);};
 
             var scale100_1 = d3.scale.linear()
                                      .domain([0,Math.max.apply(null, alter_w2)])
                                      .range([0,0.5])
-            console.log(alter_w21);
+            //console.log(alter_w21);
+
+            var arcDonut = d3.svg.arc()
+                             .outerRadius(outRadiusDonut)
+                             .innerRadius(inRadiusDonut);
+
+            var pieDonut = d3.layout.pie()
+                                    .sort(d3.descending)
+                                    .value(function(d) { return d.w1;});
+
             var ego    = selEgo.filter(function(d){return d.ntype == 0})
             var alters = selEgo.filter(function(d){return d.ntype != 0})
-
+// pie layout
             var altersDonut = svgDonut.selectAll(".arcDonut")
                                        .data(pieDonut(alters))
                                        .enter().append("g")
                                        .attr("class","arcDonut")
                                        .attr("transform", "translate(" + widthDonut / 2 + "," + heightDonut / 2 + ")");
-
+// outer line
                             altersDonut.append("line")
                                        .attr("stroke","#F38D49")
                                        .attr("stroke-width", 150)
@@ -210,16 +240,16 @@ d3.json("data/egoTemplate.json",
                                        .attr("y1", function(d) {return arcDonut.centroid(d)[1]*1.01;})
                                        .attr("x2", function(d) {return arcDonut.centroid(d)[0]*(1.01+(scale100_1(d.data.w2)));})
                                        .attr("y2", function(d) {return arcDonut.centroid(d)[1]*(1.01+(scale100_1(d.data.w2)));});
-
-                           svgDonut.selectAll(".circleDonut")
-                                   .data(ego).enter().append("g")
-                                   .append("circle")
-                                   .attr("class","circleDonut")
-                                   .attr("r", egoSize)
-                                   .attr("cx", widthDonut/2)
-                                   .attr("cy", heightDonut/2)
-                                   .attr("fill",egoFill);
-
+// ego circle
+                            svgDonut.selectAll(".circleDonut")
+                                    .data(ego).enter().append("g")
+                                    .append("circle")
+                                    .attr("class","circleDonut")
+                                    .attr("r", egoSize)
+                                    .attr("cx", widthDonut/2)
+                                    .attr("cy", heightDonut/2)
+                                    .attr("fill",egoFill);
+// alters arcs
                             altersDonut.append("line")
                                        .attr("stroke","#F38D49")
                                        .attr("stroke-width", 150)
@@ -227,33 +257,99 @@ d3.json("data/egoTemplate.json",
                                        .attr("y1", function(d) {return arcDonut.centroid(d)[1]*1;})
                                        .attr("x2", function(d) {return arcDonut.centroid(d)[0]*(1-(scale100_1(d.data.w1)));})
                                        .attr("y2", function(d) {return arcDonut.centroid(d)[1]*(1-(scale100_1(d.data.w1)));});
-
-              svgDonut.selectAll(".egoTextDonut")
-                                   .data(ego).enter().append("g")
-                                   .append("text")
-                                   .attr("dx",widthDonut/2)
-                                   .attr("dy",heightDonut/2)
-                                   .attr("font-size",48)
-                                   .attr("font-family", "sans-serif")
-                                   .attr("text-anchor","middle")
-                                   .text(function (d) {return d.name;});
-
-
+// ego labels
+                            svgDonut.selectAll(".egoTextDonut")
+                                    .data(ego).enter().append("g")
+                                    .append("text")
+                                    .attr("dx",widthDonut/2)
+                                    .attr("dy",heightDonut/2)
+                                    .attr("font-size",48)
+                                    .attr("font-family", "sans-serif")
+                                    .attr("text-anchor","middle")
+                                    .text(function (d) {return d.name;});
+// aler arc coloring
             var alterArc  =  altersDonut.append("path")
                       .attr("d",arcDonut)
                       .style("fill", function(d) {return colorDonut(d.data.ntype);});
-            console.log(alterArc)
-
+            //console.log(alterArc)
+// alter label formating
             var altersText=  altersDonut.append("text")
                       .attr("transform", function(d) { return "translate(" + arcDonut.centroid(d) + ")"; })
                       .attr("dy", ".35em")
                       .text( function(d) {return d.data.name;} );
 
+                      console.log(altersDonut);*/
 
-                      console.log(altersDonut);
-            
+//Aster Plot
+
+        
+        selEgo = data.egos[0].nodes;
+        var alter_w21 = new Array;
+        for (var t in selEgo) {alter_w21.push(selEgo[t].w2/selEgo[t].w1);};
+        var MAXW2 = Math.max.apply(null, alter_w21);
 
 
+        var ego    = selEgo.filter(function(d){return d.ntype == 0})
+        var alters = selEgo.filter(function(d){return d.ntype != 0})
+
+        var pie = d3.layout.pie()
+                           .sort(d3.descending)
+                           .value(function(d) { return d.w1; });
+
+        var out_Arc_Aster = d3.svg.arc()
+                              .innerRadius(mid_Radius_Aster2)
+                              .outerRadius(function (d) { return (radius_Aster - mid_Radius_Aster2) * (d.data.w2/MAXW2/12) + mid_Radius_Aster2; });
+
+        var in_Arc_Aster = d3.svg.arc()
+                                 .innerRadius(inner_Radius_Aster)
+                                 .outerRadius(mid_Radius_Aster1);
+
+        var altersAster = svgAster.selectAll(".arcAster")
+                                  .data(pie(alters))
+                                  .enter().append("gAster")
+                                  .attr("transform", "translate(" + widthAster / 2 + "," + heightAster / 2 + ")");
+        svgAster.call(tip1);
+        svgAster.call(tip2);
+
+        var path = svgAster.selectAll(".solidArc")
+                      .data(pie(alters))
+                      .enter().append("path")
+                      .attr("fill", function(d) { return node_Color1(d.data.ntype); })
+                      .attr("class", "solidArc")
+                      .attr("stroke", "gray")
+                      .attr("d", in_Arc_Aster)
+                      .on('mouseover', tip1.show)
+                      .on('mouseout', tip1.hide).attr("transform", "translate(" + widthAster / 2 + "," + heightAster / 2 + ")");
+
+        var outerPath = svgAster.selectAll(".outlineArc")
+                           .data(pie(alters))
+                           .enter().append("path")
+                           .attr("fill", function(d) { return node_Color2(d.data.ntype); })
+                           .attr("stroke", "gray")
+                           .attr("class", "outlineArc")
+                           .on('mouseover', tip2.show)
+                           .on('mouseout', tip2.hide)
+                           .attr("d", out_Arc_Aster).attr("transform", "translate(" + widthAster / 2 + "," + heightAster / 2 + ")");  
+
+                            svgAster.selectAll(".circleDonut")
+                                    .data(ego).enter().append("g")
+                                    .append("circle")
+                                    .attr("class","circleDonut")
+                                    .attr("r", egoSize)
+                                    .attr("cx", widthAster/2)
+                                    .attr("cy", heightAster/2)
+                                    .attr("fill",node_Color1(0));
+// ego labels
+                            svgAster.selectAll(".egoTextDonut")
+                                    .data(ego).enter().append("g")
+                                    .append("text")
+                                    .attr("dx",widthAster/2)
+                                    .attr("dy",heightAster/2)
+                                    .attr("font-size",40)
+                                    .attr("font-style", "bold")
+                                    .attr("font-family", "sans-serif")
+                                    .attr("text-anchor","middle")
+                                    .text(function (d) {return d.name;});
 // ChordVis
 
 

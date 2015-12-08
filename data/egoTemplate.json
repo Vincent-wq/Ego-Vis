@@ -2,10 +2,10 @@
 	"egos": 
 	       [{
              "nodes" : [
-                       {"name": "ego1",   "ntype": 0, "w1": 40, "w2":54},
-                       {"name": "alter1", "ntype": 1, "w1": 30, "w2":30},
-    	               {"name": "alter2", "ntype": 2, "w1": 10, "w2":60},
-    	               {"name": "alter3", "ntype": 3, "w1": 24, "w2":28}
+                       {"name": "ego1",   "ntype": 0, "w1": 40, "w2":40},
+                       {"name": "alter1", "ntype": 1, "w1": 24, "w2":30},
+    	               {"name": "alter2", "ntype": 2, "w1": 10, "w2":40},
+    	               {"name": "alter3", "ntype": 3, "w1": 15, "w2":30}
     	              ],
              "link_ego2alter": [
                                 {"source": 0, "target": 1, "ltype":0,  "w1":12, "w2":14},
