@@ -26,9 +26,9 @@ var link_io_stroke  = "#addd8e";
 var widthDonut = 947, heightDonut = 680;
 var padddingDonut = 100;
 var radiusDonut = Math.min(widthDonut,heightDonut)/2;
-var outRadiusDonut = radiusDonut-40,
-    inRadiusDonut = radiusDonut-120;
-var egoSize = 200
+var outRadiusDonut = radiusDonut*0.6,
+    inRadiusDonut = radiusDonut*0.54;
+var egoSize = radiusDonut*0.5
 var egoFill = "#727194"
 var colorDonut = d3.scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888"]);
 
@@ -48,15 +48,14 @@ var padddingStat = 100;
 
 var svgDonut  = d3.select("#mainVis").append("svg").attr("width",widthDonut)
                                                    .attr("height",heightDonut)
-                                                   .append("g")
-                                                   .attr("transform", "translate(" + widthDonut / 2 + "," + heightDonut / 2 + ")");
+                                                   
 var arcDonut = d3.svg.arc()
                  .outerRadius(outRadiusDonut)
                  .innerRadius(inRadiusDonut);
 
 var pieDonut = d3.layout.pie()
-                        .sort(null)
-                        .value(function(d) { return d.w; });
+                        .sort(d3.descending)
+                        .value(function(d) { return d.w1;});
 
 
 var svgBulbel = d3.select("#mainVis").append("svg").attr("width",widthBuble)
@@ -185,45 +184,74 @@ d3.json("data/egoTemplate.json",
 
 // DonutVis 
             selEgo = data.egos[0].nodes
+            var alter_w1 = new Array,
+                alter_w2 = new Array,
+                alter_w21 = new Array;
+            for (var t in selEgo) {alter_w1.push(selEgo[t].w1);alter_w2.push(selEgo[t].w2);};
+            for (var t in selEgo) {alter_w21.push(selEgo[t].w2-selEgo[t].w1);};
 
+            var scale100_1 = d3.scale.linear()
+                                     .domain([0,Math.max.apply(null, alter_w2)])
+                                     .range([0,0.5])
+            console.log(alter_w21);
             var ego    = selEgo.filter(function(d){return d.ntype == 0})
-            var alters = selEgo.filter(function(d){return d.ntype == 1})
+            var alters = selEgo.filter(function(d){return d.ntype != 0})
 
-            console.log(ego)
-            var gDonutAlters = svgDonut.selectAll(".arcDonut")
+            var altersDonut = svgDonut.selectAll(".arcDonut")
                                        .data(pieDonut(alters))
                                        .enter().append("g")
                                        .attr("class","arcDonut")
+                                       .attr("transform", "translate(" + widthDonut / 2 + "," + heightDonut / 2 + ")");
 
-            var egoDonut = svgDonut.selectAll(".circleDonut")
+                            altersDonut.append("line")
+                                       .attr("stroke","#F38D49")
+                                       .attr("stroke-width", 150)
+                                       .attr("x1", function(d) {return arcDonut.centroid(d)[0]*1.01;})
+                                       .attr("y1", function(d) {return arcDonut.centroid(d)[1]*1.01;})
+                                       .attr("x2", function(d) {return arcDonut.centroid(d)[0]*(1.01+(scale100_1(d.data.w2)));})
+                                       .attr("y2", function(d) {return arcDonut.centroid(d)[1]*(1.01+(scale100_1(d.data.w2)));});
+
+                           svgDonut.selectAll(".circleDonut")
                                    .data(ego).enter().append("g")
                                    .append("circle")
                                    .attr("class","circleDonut")
                                    .attr("r", egoSize)
-                                   .attr("cx", 0)
-                                   .attr("cy", 0)
-                                   .attr("fill",egoFill)
+                                   .attr("cx", widthDonut/2)
+                                   .attr("cy", heightDonut/2)
+                                   .attr("fill",egoFill);
 
-            var egoText =  svgDonut.selectAll(".egoTextDonut")
+                            altersDonut.append("line")
+                                       .attr("stroke","#F38D49")
+                                       .attr("stroke-width", 150)
+                                       .attr("x1", function(d) {return arcDonut.centroid(d)[0]*1;})
+                                       .attr("y1", function(d) {return arcDonut.centroid(d)[1]*1;})
+                                       .attr("x2", function(d) {return arcDonut.centroid(d)[0]*(1-(scale100_1(d.data.w1)));})
+                                       .attr("y2", function(d) {return arcDonut.centroid(d)[1]*(1-(scale100_1(d.data.w1)));});
+
+              svgDonut.selectAll(".egoTextDonut")
                                    .data(ego).enter().append("g")
                                    .append("text")
+                                   .attr("dx",widthDonut/2)
+                                   .attr("dy",heightDonut/2)
                                    .attr("font-size",48)
                                    .attr("font-family", "sans-serif")
                                    .attr("text-anchor","middle")
-                                   .text(function (d) {return d.name;})
-                                 
+                                   .text(function (d) {return d.name;});
 
-            console.log(gDonutAlters)
 
-                gDonutAlters.append("path")
+            var alterArc  =  altersDonut.append("path")
                       .attr("d",arcDonut)
                       .style("fill", function(d) {return colorDonut(d.data.ntype);});
+            console.log(alterArc)
 
-                gDonutAlters.append("text")
+            var altersText=  altersDonut.append("text")
                       .attr("transform", function(d) { return "translate(" + arcDonut.centroid(d) + ")"; })
                       .attr("dy", ".35em")
                       .text( function(d) {return d.data.name;} );
 
+
+                      console.log(altersDonut);
+            
 
 
 // ChordVis
