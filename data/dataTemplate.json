@@ -7,10 +7,10 @@
     	                 {"name": "alter2", "ntype": 2, "layer": 2, "w1": 10, "w2":40},
     	                 {"name": "alter3", "ntype": 3, "layer": 3, "w1": 15, "w2":30}
     	                 ], 
-             "link_alter2alter": [
-                                  {"source": "alter1", "target": "alter2", "w1":10, "w2":10},
-                                  {"source": "alter3", "target": "alter1", "w1":4,  "w2":5},
-                                  {"source": "alter2", "target": "alter2", "w1":23, "w2":48}
-                                 ]
+             "links": [
+                        {"source": "alter1", "target": "alter2", "w1":10, "w2":10},
+                        {"source": "alter3", "target": "alter1", "w1":4,  "w2":5},
+                        {"source": "alter2", "target": "alter2", "w1":23, "w2":48}
+                      ]
          }]
 }
