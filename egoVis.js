@@ -160,7 +160,8 @@ d3.json("data/dataTemplate.json",
 // Ego force layout 
         svgStellar.call(tip_stellar1);
         console.log(tip_stellar1)
-
+        
+         
 
         var force_stellar = d3.layout.force()
                       .nodes(nodes_data_stellar)
@@ -174,7 +175,7 @@ d3.json("data/dataTemplate.json",
                       .theta(0.1)
                       .on("tick",tick_stellar)
                       .start();                  
-        
+        var drag_hold = force_stellar.drag().on("dragstart",function(d,i){ d.fixed = true;}); 
         var links_stellar = svgStellar.selectAll(".link")
                              .data(edges_data_stellar)
                              .enter().append("line")
@@ -200,7 +201,8 @@ d3.json("data/dataTemplate.json",
                                               if (d.ntype!=0){
                                               //tip_stellar1.hide;
                                               links_stellar.style("opacity", function(edge) { if( edge.target == d ) {return 0.0;} else {return 0;}});}})
-                            .call(force_stellar.drag);
+                            .on("dblclick",function(d,i){ d.fixed = false;})  
+                            .call(drag_hold);
 
 // Node lable initialize
         var nlabel_stellar = svgStellar.selectAll("text")
@@ -233,6 +235,7 @@ d3.json("data/dataTemplate.json",
                                   .attr("x2",function(d) { return d.target.x; })
                                   .attr("y2",function(d) { return d.target.y; });
                      };
+
 
 
 // BubleVis
