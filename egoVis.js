@@ -445,7 +445,7 @@ function drawStellar(n,data){
                                  .attr("rx",5)
                                  .attr("ry",5)
                                  .attr("fill","#f0f0f0")
-                                 //.attr("opacity", 0.3)
+                                 .attr("opacity", 0.3)
 
     };
 
@@ -491,7 +491,7 @@ function drawBuble (k,data) {
                                   .data(targetBuble)
                                   .enter().append("text")
                                   .style("fill","snow")
-                                  .style("font-size",function(d) {if (d[2]<100) {return 0;} else if (d[2]<150) {return 12;} else {return 24;}})
+                                  .style("font-size",function(d) {if (d[2]<150) {return 0;} else if (d[2]<200) {return 12;} else {return 24;}})
                                   .attr("text-anchor","middle")
                                   //.attr("transform", "translate(" + width_stellar / 2 + "," + height_stellar / 2 + ")")
                                   .text(function(d){ return d.name;});
