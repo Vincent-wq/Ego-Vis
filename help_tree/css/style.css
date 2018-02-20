@@ -1,0 +1,10 @@
+#container{width: 500px; height: 250px; background: #fff;}
+path{    fill: none;
+  }
+ g.aa path{ stroke: #f00;
+    stroke-width: 5;}
+ g.bb path{ stroke: #0066cc;
+    stroke-width: 5;}
+ .domain,.tick line{ stroke: #000;
+    stroke-width: 1; }
+  .show{width: 500px;text-align: center;height: 40px;background-color: #eee;line-height: 40px;}

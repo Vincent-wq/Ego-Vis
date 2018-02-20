@@ -38,10 +38,16 @@ body {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
+<<<<<<< HEAD
   background: #08306b;
   /*rgba(0, 0, 0, 0.8)*/
   color: #fff;
   border-radius: 5px;
+=======
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+>>>>>>> d8ef78fd79661f37a8c06ab691ed9c7ff250e791
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -62,4 +68,8 @@ body {
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d8ef78fd79661f37a8c06ab691ed9c7ff250e791

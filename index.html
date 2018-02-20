@@ -6,6 +6,8 @@
         <meta name="title" content="Visulization of Ego Communication Networks" />
         <title> Visulization of Ego Communication Networks </title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'> -->
         <style type="text/css">
         
         div #container {background-color: #EEEEEE;}
@@ -15,9 +17,9 @@
         div #stsVis    {background-color: #ffff99; height:720px; width:960px; float:right; }
         div #mainVis   {background-color: #e5f5f9; height:720px; width:960px; float: left; }
         div #footer    {background-color: #99bbbb; clear:both; text-align:center;font-family: sans-serif;}
-        h1 {margin-bottom:0; font-size:48px; font-family: Agency FB; color: k; background-color: #99bbbb;}
-        h2 {margin-bottom:0; font-size:32px; font-family: Agency FB; color: k; background-color: #99bbbb;}
-        h3 {margin-bottom:0; font-size:28px; font-family: Agency FB; color: k; background-color: #99bbbb;}
+        h1 {margin-bottom:0; font-size:64px; font-family: Agency FB; color: k; background-color: #99bbbb;}
+        h2 {margin-bottom:0; font-size:48px; font-family: Agency FB; color: k; background-color: #99bbbb;}
+        h3 {margin-bottom:0; font-size:32px; font-family: Agency FB; color: k; background-color: #99bbbb;}
         ul {margin:0;}
         li {list-style:none;}
 /*tooltips*/    
@@ -32,7 +34,11 @@
             border-width: 1px;
             background-color: plum;
             border-radius: 3px;}
-       
+ /*radar css*/           
+       .legend {
+                font-family: 'Raleway', sans-serif;
+                fill: #333333;
+            }
 /*bar chart*/        
         .bar{
             display: inline-block;
@@ -42,10 +48,7 @@
             background-color:teal;}
 
 /*Stellar Layout*/    
-        .node {
-            /*cursor: pointer;
-            stroke: #fff;
-            stroke-width: 0.5px;*/}
+        .node {}
         .link {
             stroke : #969696;
             stroke-width: 2;
@@ -54,47 +57,47 @@
         .linetext {
             font-size: 12px ;
             font-family: SimSun;
-            fill:#0000FF;
+            fill:"k";
             fill-opacity:0.5;}
             
         .nl_text {
             font-size: 12px ;
             font-family: sans-serif;
-            fill:#0000FF;
+            fill:"k";
             fill-opacity:0.5;}
 
         .infotext {
             font-family: Agency FB;
             font-weight: Bold;
-            fill: #f0f0f0;
+            fill: "snow";
             fill-opacity:1;}
         .arcPath{
             
         }
         .chord path {
             fill-opacity: .67;
-            stroke: #000;
+            stroke: "k";
             stroke-width: .5px;
         }
 /*Scatter Plot*/
         .xAxis path,
         .xAxis line{
-            stroke: floralwhite;
+            stroke: k;
             stroke-width: 2;
             shape-rendering: crispEdges;}
 
         .xAxis text {
-            fill: snow;
+            fill: k;
             font-family: sans-serif;
             font-size: 22px;}
         .yAxis path,
         .yAxis line{
-            stroke: floralwhite;
+            stroke: k;
             stroke-width: 2;
             shape-rendering: crispEdges;}
 
         .yAxis text {
-            fill: snow;
+            fill: k;
             font-family: sans-serif;
             font-size: 22px;}
 
@@ -143,41 +146,59 @@
         </style>
     </head>
 
-    <body bgcolor="#EEEEEE">
-
+    <body bgcolor="#EEEEEE", font-family: 'Open Sans', sans-serif;>
+        
         <div id="container">
-            <div id = "header"> <h1> Vis ECN </h1></div>
+            <div id = "header"> <h1> egoSensing </h1></div>
             <hr>
             <table>
             <tr>
                 <td>          
-                    <h2> Sts View </h2>
+                    <h2>     Statistical View </h2>
                     <div id = "scatterVis" width = "960px" height = "720px">  </div>
                 </td> 
                 <td>
-                    <h2> Stellar View </h2>
+                    <h2> Group View </h2>
+                    <div id = "groupVis" width = "1930px" height = "720px"> 
+                </td>
+                <td>
+                    <h2> Signature View </h2>
                     <div id = "stellarVis" width = "960px" height = "720px"> 
                 </td>
-            </tr>          
-            </table>
-            <table>
-            <tr>
+            </tr> 
+<!--             <tr>
                 <td>
-                    <h2> Whole View </h2>
-                    <div id = "wholeVis" width = "1930px" height = "720px"> 
+                    <h2> TEST View </h2>
+                    <div id = "testVis" width = "800px" height = "600px"> 
+                    <svg width="800" height="600"> 
+
+    <defs>
+        <clipPath id="clipPath">
+            <circle cx="50" cy="50" r="50" />
+        </clipPath>
+    </defs>
+    <g  style="clip-path: url(#clipPath);"  transform="translate(100,100)">
+        <rect width="80" height="100" transform="translate(0,0)" fill="red"></rect>
+        <rect width="20" height="100" transform="translate(80,0)" fill="yellow"></rect>
+    </g>
+    </svg>
                 </td>
-            </tr>
+            </tr>          -->
             </table>
             <hr>
-            <div id = "footer"> Powered by Qing Wang, Zhiyao Teng and Jiansu Pu. </div>
+            <div id = "footer", font-family: 'Open Sans', sans-serif;> Powered by Qing Wang and Jiansu Pu. </div>
             <!--
                     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
                     -->
                     <script src="d3/d3.js"     charset = "utf-8"></script>
                     <script src="d3/d3-tip.js" charset = "utf-8"></script>
                     <script src="d3/colorbrewer.js" charset = "utf-8"></script>
-                    <script type="text/javascript" src="egoVis.js"></script>
+                    <script type="text/javascript" src="egoVis.js" ></script>
+                    
                     <!-- arc + force layout
+                    <script src="d3-downloadable.js"></script>
+                           src="egoVis.js"  
+                           src="egoVis - zoomableScatter_3 layer egoStellar.js"
                            src="egoVis - zoomableScatter_3 layer egoStellar.js"
                     <script type="text/javascript" src="egoVis_arc_force.js"></script>
                     --> 
